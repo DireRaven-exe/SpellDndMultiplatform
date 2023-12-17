@@ -28,6 +28,7 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
+                implementation(compose.material3)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation("io.ktor:ktor-client-core:2.3.7")
@@ -35,15 +36,15 @@ kotlin {
                 implementation("io.ktor:ktor-client-json:2.3.7")
                 implementation("io.ktor:ktor-client-serialization:2.3.7")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.7")
-                //implementation("io.ktor:ktor-client-okhttp:2.3.7")
                 implementation("io.ktor:ktor-client-cio:2.3.7")
+
             }
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.activity:activity-compose:1.7.2")
+                api("androidx.activity:activity-compose:1.8.2")
                 api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.10.1")
+                api("androidx.core:core-ktx:1.12.0")
             }
         }
         val iosX64Main by getting
@@ -81,7 +82,4 @@ android {
     kotlin {
         jvmToolchain(17)
     }
-}
-dependencies {
-    implementation("com.google.firebase:firebase-crashlytics-buildtools:2.8.1")
 }
