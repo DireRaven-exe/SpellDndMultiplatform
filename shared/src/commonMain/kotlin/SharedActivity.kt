@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import components.spell.showSpellCardsClassicStyle
+import components.spell.spellsScreen
 import data.SpellDetail
 import request.SpellApiClient.getSpells
 import theme.SpellDndMultiPlatformTheme
@@ -17,7 +17,7 @@ fun SharedActivity() {
         LaunchedEffect(spells) {
             spells = getSpells().results
         }
-        showSpellCardsClassicStyle(spells)
+        spellsScreen(spells)
     }
 }
 

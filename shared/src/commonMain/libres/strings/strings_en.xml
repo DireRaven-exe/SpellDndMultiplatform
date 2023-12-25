@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">spellDnd</string>
+
+    <!-- Schools of spell -->
+    <string name="necromancy">necromancy</string>
+    <string name="evocation">evocation</string>
+    <string name="illusion">illusion</string>
+    <string name="transmutation">transmutation</string>
+    <string name="divination">divination</string>
+    <string name="enchantment">enchantment</string>
+    <string name="abjuration">abjuration</string>
+    <string name="conjuration">conjuration</string>
+
+    <!--  Classes of games  -->
+    <string name="barbarian">Barbarian</string>
+    <string name="bard">Bard</string>
+    <string name="cleric">Cleric</string>
+    <string name="druid">Druid</string>
+    <string name="fighter">Fighter</string>
+    <string name="monk">Monk</string>
+    <string name="paladin">Paladin</string>
+    <string name="ranger">Ranger</string>
+    <string name="rogue">Rogue</string>
+    <string name="sorcerer">Sorcerer</string>
+    <string name="warlock">Warlock</string>
+    <string name="wizard">Wizard</string>
+    <string name="empty">Empty</string>
+
+    <!-- BottomNavigation -->
+    <string name="filters">Filters</string>
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
+    <string name="settings">Settings</string>
+
+    <!-- Home Screen -->
+    <string name="successfully_added">Successfully added</string>
+    <string name="successfully_deleted">Successfully deleted this spell from your favorites</string>
+
+    <!--  Loading Screen  -->
+    <string name="please_wait">Please, wait…</string>
+
+    <!-- TextFieldBox -->
+    <string name="cancel" >Cancel</string>
+    <string name="Search_spell">Search spell…</string>
+
+    <!--  Filters Screen  -->
+    <string name="level">Level</string>
+    <string name="school">School</string>
+    <string name="dnd_class">Class</string>
+    <string name="use_filters">Use filters</string>
+
+    <!--  InfoCardSide  -->
+    <string name="range">Range</string>
+    <string name="duration">Duration</string>
+    <string name="casting_time">Casting Time</string>
+    <string name="components">Components</string>
+    <string name="higher_level"><b>"Higher level. "</b></string>
+    <string name="material">Material</string>
+    <string name="none_material">None</string>
+
+    <!--    SettingsScreen    -->
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="russian">Russian</string>
+
+    <!--  MenuActions  -->
+    <string name="pin_card">Pin card</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="delete_from_favorites">Delete from favorites</string>
+    <string name="unpin_card">Unpin card</string>
+
+
+    <string name="dark_blue">Dark Blue</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="theme">Theme</string>
+    <string name="screen_pin_card">Pinned</string>
+    <string name="add_filters">Add filters</string>
+    <string name="homebrew">Homebrew</string>
+    <string name="add_card">Add card</string>
+    <string name="create_card">Create card</string>
+
+
+    <string name="cantrip">Cantrip</string>
+    <string name="spellName">Name</string>
+    <string name="spellDesc">Description</string>
+    <string name="spellHightLevel">Higher Level</string>
+    <string name="isRitual">This is ritual?</string>
+    <string name="needConcentration">Need concentration?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="archetype">Archetype</string>
+    <string name="accept">Accept</string>
+
+</resources>
