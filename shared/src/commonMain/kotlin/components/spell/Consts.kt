@@ -4,10 +4,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import com.myapplication.common.MainRes
 import data.SpellDetail
+import io.github.skeptick.libres.compose.painterResource
 import io.github.skeptick.libres.images.Image
+import theme.spellCard_backgroundContainer_school_abjuration
+import theme.spellCard_backgroundContainer_school_conjuration
+import theme.spellCard_backgroundContainer_school_divination
+import theme.spellCard_backgroundContainer_school_enchantment
+import theme.spellCard_backgroundContainer_school_evocation
+import theme.spellCard_backgroundContainer_school_illusion
+import theme.spellCard_backgroundContainer_school_necromancy
+import theme.spellCard_backgroundContainer_school_transmutation
+import theme.spellCard_backgroundIcon_school_abjuration
+import theme.spellCard_backgroundIcon_school_conjuration
+import theme.spellCard_backgroundIcon_school_divination
+import theme.spellCard_backgroundIcon_school_enchantment
+import theme.spellCard_backgroundIcon_school_evocation
+import theme.spellCard_backgroundIcon_school_illusion
+import theme.spellCard_backgroundIcon_school_necromancy
+import theme.spellCard_backgroundIcon_school_transmutation
 
 val spellSmallCardWith = 350.dp
 val spellSmallCardHeight = 80.dp
@@ -108,7 +127,6 @@ enum class DndClass {
 //        else -> {
 //            drawableId = R.drawable.neutural_magic_spell
 //            backgroundColor = Color(0xFF5B3EC0)
-//            Log.e("not ok", "path don't find")
 //        }
 //    }
 //    return Pair(drawableId, backgroundColor)
@@ -141,5 +159,59 @@ fun getListSchoolsBySelectedLanguage(selectedLanguage: String) : MutableList<Str
     return when (selectedLanguage) {
         "ru" -> listAllSchools[0]
         else -> listAllSchools[1]
+    }
+}
+
+
+@Composable
+fun getBackgroundColorsForSchool(school: String): Pair<Color, Color> {
+    return when (findSchoolIndex(school)) {
+        0 -> Pair(spellCard_backgroundContainer_school_necromancy, spellCard_backgroundIcon_school_necromancy)
+        1 -> Pair(spellCard_backgroundContainer_school_evocation, spellCard_backgroundIcon_school_evocation)
+        2 -> Pair(spellCard_backgroundContainer_school_illusion, spellCard_backgroundIcon_school_illusion)
+        3 -> Pair(spellCard_backgroundContainer_school_transmutation, spellCard_backgroundIcon_school_transmutation)
+        4 -> Pair(spellCard_backgroundContainer_school_divination, spellCard_backgroundIcon_school_divination)
+        5 -> Pair(spellCard_backgroundContainer_school_enchantment, spellCard_backgroundIcon_school_enchantment)
+        6 -> Pair(spellCard_backgroundContainer_school_abjuration, spellCard_backgroundIcon_school_abjuration)
+        7 -> Pair(spellCard_backgroundContainer_school_conjuration, spellCard_backgroundIcon_school_conjuration)
+        else -> Pair(Color.Black, Color.Black) // Заглушка на случай неправильной школы
+    }
+}
+
+private fun findSchoolIndex(school: String): Int {
+    val lowerCasedSchool = school.toLowerCase()
+
+    for (i in 0 until listAllSchools[0].size) {
+        if (listAllSchools[0][i].toLowerCase() == lowerCasedSchool ||
+            listAllSchools[1][i].toLowerCase() == lowerCasedSchool) {
+            return i
+        }
+    }
+
+    return -1 // Школа не найдена
+}
+
+@Composable
+fun getBackgroundContainerColor(school: String): Color {
+    return getBackgroundColorsForSchool(school).first
+}
+
+@Composable
+fun getBackgroundIconColor(school: String): Color {
+    return getBackgroundColorsForSchool(school).second
+}
+
+@Composable
+fun getIconForSchool(school: String): Painter {
+    return when (findSchoolIndex(school)) {
+        0 -> painterResource(MainRes.image.necromancy_icon)
+        1 -> painterResource(MainRes.image.evocation_icon)
+        2 -> painterResource(MainRes.image.illusion_icon)
+        3 -> painterResource(MainRes.image.transmutation_icon)
+        4 -> painterResource(MainRes.image.divination_icon)
+        5 -> painterResource(MainRes.image.enchantment_icon)
+        6 -> painterResource(MainRes.image.abjuration_icon)
+        7 -> painterResource(MainRes.image.conjuration_icon)
+        else -> painterResource(MainRes.image.necromancy_icon) // Заглушка на случай неправильной школы
     }
 }

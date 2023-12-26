@@ -65,11 +65,12 @@ fun spellShortView(spell: SpellDetail, isVisibleDialogSpell: Boolean, state: Laz
         Card(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
+
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(getBackgroundColorsForSchool(spell.school).first)
                     .padding(horizontal = 15.dp, vertical = 10.dp),
                 verticalArrangement = Arrangement.Center
             ) {
@@ -186,13 +187,13 @@ private fun SpellSchoolIcon(spell: SpellDetail, state: LazyGridState) {
             .size(50.dp)
             .offset(offset)
             .background(
-                spellCard_backgroundIcon_school_necromancy,
+                getBackgroundColorsForSchool(spell.school).second,
                 shape = RoundedCornerShape(50.dp)
             ),
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            painter = painterResource(MainRes.image.necromancy_icon),
+            painter = getIconForSchool(spell.school),
             contentDescription = null,
             modifier = Modifier
                 .size(32.dp),
