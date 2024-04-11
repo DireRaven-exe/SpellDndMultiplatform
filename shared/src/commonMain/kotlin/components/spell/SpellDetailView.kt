@@ -26,8 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import data.SpellDetail
-import theme.LocalCustomColorsPalette
+import com.myapplication.common.MainRes
+import data.SpellDetailDto
+import domain.models.SpellDetail
+import ui.theme.LocalCustomColorsPalette
 
 /**
  * Create Dialog with Card with Spell Information
@@ -55,7 +57,7 @@ fun spellDetailView(spell: SpellDetail) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = spell.name,
+                    text = spell.name!!,
                     fontSize = MaterialTheme.typography.displayMedium.fontSize,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -66,7 +68,7 @@ fun spellDetailView(spell: SpellDetail) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = spell.school.capitalize() + " " + spell.level,
+                    text = spell.school!!.capitalize() + " " + spell.level,
                     fontSize = MaterialTheme.typography.headlineSmall.fontSize,
                     fontFamily = FontFamily.Cursive,
                 )
@@ -74,25 +76,35 @@ fun spellDetailView(spell: SpellDetail) {
 
 
             Spacer(modifier = Modifier.height(5.dp))
-
             LazyColumn {
                 item {
-                    BoldTextInfo(label = "Время накладывания:", value = spell.casting_time, fontSize = MaterialTheme.typography.headlineSmall.fontSize)
-                    BoldTextInfo(label = "Радиус:", value = spell.range, fontSize = MaterialTheme.typography.headlineSmall.fontSize)
-                    BoldTextInfo(label = "Компоненты:", value = spell.components, fontSize = MaterialTheme.typography.headlineSmall.fontSize)
-                    BoldTextInfo(label = "Длительность:", value = spell.duration, fontSize = MaterialTheme.typography.headlineSmall.fontSize)
+                    BoldTextInfo(label = "${MainRes.string.casting_time}:", value = spell.casting_time!!, fontSize = MaterialTheme.typography.headlineSmall.fontSize)
+                }
+                item {
+                    BoldTextInfo(label = "${MainRes.string.range}:", value = spell.range!!, fontSize = MaterialTheme.typography.headlineSmall.fontSize)
+                }
+                item {
+                    BoldTextInfo(label = "${MainRes.string.components}:", value = spell.components!!, fontSize = MaterialTheme.typography.headlineSmall.fontSize)
+                }
+                item {
+                    BoldTextInfo(label = "${MainRes.string.duration}:", value = spell.duration!!, fontSize = MaterialTheme.typography.headlineSmall.fontSize)
                     Spacer(modifier = Modifier.height(5.dp))
                 }
                 item {
-                    BoldTextInfo(label = "Материалы:", value = spell.material, fontSize = MaterialTheme.typography.displaySmall.fontSize)
-                    BoldTextInfo(label = "Классы:", value = spell.dnd_class)
-                    BoldTextInfo(label = "Архитипы:", value = spell.archetype)
+                    BoldTextInfo(label = "${MainRes.string.material}:", value = spell.material!!, fontSize = MaterialTheme.typography.displaySmall.fontSize)
+                }
+                item {
+                    BoldTextInfo(label = "${MainRes.string.dnd_class}:", value = spell.dnd_class!!)
+
+                }
+                item {
+                    BoldTextInfo(label = "${MainRes.string.archetype}:", value = spell.archetype!!)
                     Spacer(modifier = Modifier.height(5.dp))
                 }
                 item {
                     Text(
                         modifier = Modifier,
-                        text = spell.desc,
+                        text = spell.desc!!,
                         fontSize = MaterialTheme.typography.displaySmall.fontSize,
                     )
                 }
@@ -100,9 +112,9 @@ fun spellDetailView(spell: SpellDetail) {
                     Text(
                         modifier = Modifier,
                         text = buildAnnotatedString {
-                            if (spell.higher_level.isNotBlank()) {
+                            if (spell.higher_level!!.isNotBlank()) {
                                 withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                                    append("На высоких уровнях:")
+                                    append("${MainRes.string.higher_level}:")
                                 }
                                 append(" ${spell.higher_level}")
                             }

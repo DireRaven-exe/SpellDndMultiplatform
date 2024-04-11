@@ -1,5 +1,4 @@
 import androidx.compose.runtime.Composable
+import main.MainScreen
 
-actual fun getPlatformName(): String = "Android"
-
-@Composable fun MainView() = SharedActivity()
+@Composable fun MainView() = MainScreen()

@@ -1,10 +1,6 @@
-package theme
+package ui.theme
 
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.myapplication.common.MainRes
-import data.SpellDetail
-import io.github.skeptick.libres.images.Image
 
 internal val md_theme_dark_primary = Color(0xFFEE7234)
 internal val md_theme_dark_onPrimary = Color(0xFFFAFAFA)
@@ -53,9 +49,10 @@ object ScrollBarColor{
     val pistonColor = Color(0xFF808080)
 }
 
+//val PrimaryColor = Color(0xFFE50914)
 
-internal val spellCard_backgroundContainer_school_necromancy = Color(0xff07178f)
-internal val spellCard_backgroundIcon_school_necromancy = Color(0xff040c46)
+internal val spellCard_backgroundContainer_school_necromancy = Color(0xff383838)
+internal val spellCard_backgroundIcon_school_necromancy = Color(0xff141414)
 
 internal val spellCard_backgroundContainer_school_abjuration = Color(0xff425a15)
 internal val spellCard_backgroundIcon_school_abjuration = Color(0xff344610)
@@ -79,3 +76,14 @@ internal val spellCard_backgroundIcon_school_illusion = Color(0xff040c46)
 internal val spellCard_backgroundContainer_school_transmutation = Color(0xff923705)
 internal val spellCard_backgroundIcon_school_transmutation = Color(0xff5d2303)
 
+internal val primaryColor = Color(0xFFE50914)
+val darkPrimaryColor = Color(0xFFB81D24)
+
+val surface = Color(0xFFF8F8F8)
+val darkSurface = Color(0xFF000000)
+
+val textPrimary = Color(0xFF212121)
+val darkTextPrimary = Color(0xFFF8F8F8)
+
+val textSecondary = Color(0xFF666666)
+val darkTextSecondary = Color(0xFFC3C3C3)

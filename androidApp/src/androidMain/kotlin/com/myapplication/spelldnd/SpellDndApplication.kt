@@ -1,0 +1,21 @@
+package com.myapplication.spelldnd
+
+import android.app.Application
+import di.initKoin
+import org.koin.android.BuildConfig
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.logger.Level
+
+class SpellDndApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+
+        ContextUtils.setContext(context = this)
+
+        initKoin {
+            androidLogger(level = if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
+            androidContext(androidContext = this@SpellDndApplication)
+        }
+    }
+}

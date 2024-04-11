@@ -10,6 +10,7 @@ import kotlinx.serialization.Serializable
  * @param next - следующая страница с карточками
  */
 @Serializable
-data class SpellResponse(
-    @SerialName("results") val results: List<SpellDetail>
+data class SpellResponseDto(
+    @SerialName("results")
+    val results: List<SpellDetailDto>? = null
 )

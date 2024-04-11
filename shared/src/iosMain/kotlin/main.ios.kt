@@ -1,5 +1,7 @@
 import androidx.compose.ui.window.ComposeUIViewController
+import main.MainScreen
+import moe.tlaster.precompose.PreComposeApplication
 
-actual fun getPlatformName(): String = "iOS"
+//actual fun getPlatformName(): String = "iOS"
 
-fun MainViewController() = ComposeUIViewController { SharedActivity() }
+fun MainViewController() = PreComposeApplication { MainScreen() }

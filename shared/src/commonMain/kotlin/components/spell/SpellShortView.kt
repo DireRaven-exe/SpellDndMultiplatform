@@ -1,7 +1,6 @@
 package components.spell
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,19 +33,15 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.myapplication.common.MainRes
-import data.SpellDetail
-import io.github.skeptick.libres.compose.painterResource
+import data.SpellDetailDto
+import domain.models.SpellDetail
 import kotlinx.coroutines.delay
-import theme.LocalCustomColorsPalette
-import theme.spellCard_backgroundIcon_school_necromancy
-
+import ui.theme.LocalCustomColorsPalette
 
 
 /**
@@ -70,7 +65,7 @@ fun spellShortView(spell: SpellDetail, isVisibleDialogSpell: Boolean, state: Laz
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(getBackgroundColorsForSchool(spell.school).first)
+                    .background(getBackgroundColorsForSchool(spell.school!!).first)
                     .padding(horizontal = 15.dp, vertical = 10.dp),
                 verticalArrangement = Arrangement.Center
             ) {
@@ -130,7 +125,7 @@ private fun spellSchoolAndLevel(spell: SpellDetail) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = spell.school.capitalize() + ", " + spell.level,
+                text = spell.school!!.capitalize() + ", " + spell.level,
                 textAlign = TextAlign.Center,
                 fontSize = MaterialTheme.typography.displaySmall.fontSize,
                 fontWeight = FontWeight.Bold,
@@ -149,7 +144,7 @@ private fun spellName(spell: SpellDetail) {
     ) {
         Text(
             modifier = Modifier,
-            text = spell.name,
+            text = spell.name!!,
             textAlign = TextAlign.Center,
             fontSize = MaterialTheme.typography.headlineSmall.fontSize,
             fontWeight = FontWeight.Bold,
@@ -187,7 +182,7 @@ private fun SpellSchoolIcon(spell: SpellDetail, state: LazyGridState) {
             .size(50.dp)
             .offset(offset)
             .background(
-                getBackgroundColorsForSchool(spell.school).second,
+                getBackgroundColorsForSchool(spell.school!!).second,
                 shape = RoundedCornerShape(50.dp)
             ),
         contentAlignment = Alignment.Center

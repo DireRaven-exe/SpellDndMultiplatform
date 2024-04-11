@@ -55,7 +55,7 @@
 <string name="duration">Длительность</string>
 <string name="casting_time">Время накладывания</string>
 <string name="components">Компоненты</string>
-<string name="higher_level"><b>На больших уровнях. </b></string>
+<string name="higher_level">На больших уровнях</string>
 <string name="material">Материал</string>
 <string name="none_material">Материал не нужен</string>
 

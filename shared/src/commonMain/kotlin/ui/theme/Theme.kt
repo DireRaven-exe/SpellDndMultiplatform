@@ -1,4 +1,4 @@
-package theme
+package ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -11,13 +11,21 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
-private val darkColors = darkColorScheme(
-    primary = md_theme_dark_primary,
-    onPrimary = md_theme_dark_onPrimary,
-    primaryContainer = md_theme_dark_background,
-    secondary = md_theme_dark_secondary,
-    surface = md_theme_dark_surface,
-    onError = md_theme_dark_onError,
+//private val darkColors = darkColorScheme(
+//    primary = md_theme_dark_primary,
+//    onPrimary = md_theme_dark_onPrimary,
+//    primaryContainer = md_theme_dark_background,
+//    secondary = md_theme_dark_secondary,
+//    surface = md_theme_dark_surface,
+//    onError = md_theme_dark_onError,
+//)
+
+private val DarkColorPalette = darkColorScheme(
+    primary = darkPrimaryColor,
+    secondary = darkPrimaryColor,
+    surface = darkSurface,
+    onSurface = darkTextPrimary,
+    background = darkSurface
 )
 
 val CustomDarkColors = CustomColorsPalette(
@@ -98,7 +106,7 @@ fun SpellDndMultiPlatformTheme(
     val colors = if (!useDarkTheme) {
         lightColors
     } else {
-        darkColors
+        DarkColorPalette
     }
 
     val customColorsPalette = if (!useDarkTheme) {
