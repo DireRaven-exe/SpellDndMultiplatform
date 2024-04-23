@@ -57,7 +57,7 @@ tasks.register("clean").configure {
 
 buildscript {
     dependencies {
-        classpath("io.github.skeptick.libres:gradle-plugin:1.2.2")
+        classpath(libs.gradle.plugin)
     }
 }
 

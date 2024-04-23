@@ -1,5 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     id("io.github.skeptick.libres")
@@ -8,9 +9,13 @@ plugins {
     alias(libs.plugins.kotlinX.serialization.plugin)
     alias(libs.plugins.buildKonfig)
     alias(libs.plugins.compose)
+
+    alias(libs.plugins.sqlDelight)
 }
 
+@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    kotlin.applyDefaultHierarchyTemplate()
     androidTarget()
 
     jvm("desktop")
@@ -35,7 +40,7 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 api(compose.components.resources)
                 api(compose.materialIconsExtended)
-
+                //implementation(compose.foundation)
                 implementation(libs.kotlinX.coroutines)
 
                 api(libs.ktor.core)
@@ -52,6 +57,7 @@ kotlin {
 
                 implementation(libs.multiplatformSettings.noArg)
                 implementation(libs.multiplatformSettings.coroutines)
+                //implementation("ch.qos.logback:logback-classic:1.4.14")
 
                 api(libs.napier)
 
@@ -59,18 +65,31 @@ kotlin {
 
                 api(libs.preCompose)
                 api(libs.preCompose.viewmodel)
-                implementation("io.github.skeptick.libres:libres-compose:1.2.2")
+
+                implementation(libs.sqlDelight.coroutine)
+
+                implementation(libs.libres.compose)
 
                 sourceSets["androidMain"].dependencies {
                     implementation(libs.ktor.android)
+                    implementation(libs.sqlDelight.android)
+                }
+
+                sourceSets["desktopMain"].dependencies {
+                    implementation(libs.sqlDelight.jvm)
+                }
+
+                sourceSets["iosMain"].dependencies {
+                    implementation(libs.ktor.darwin)
+                    implementation(libs.sqlDelight.native)
                 }
 
             }
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.activity:activity-compose:1.8.2")
-                api("androidx.appcompat:appcompat:1.6.1")
+                api(libs.activity.compose)
+                api(libs.appcompat)
                 api(libs.androidX.core)
                 implementation(libs.ktor.android)
             }
@@ -78,12 +97,12 @@ kotlin {
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-        }
+//        val iosMain by creating {
+//            dependsOn(commonMain)
+//            iosX64Main.dependsOn(this)
+//            iosArm64Main.dependsOn(this)
+//            iosSimulatorArm64Main.dependsOn(this)
+//        }
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
@@ -94,7 +113,7 @@ kotlin {
 
 android {
     compileSdk = 34//(findProperty("android.compileSdk") as String).toInt()
-    namespace = "com.myapplication.common"
+    namespace = "com.spelldnd.common"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
@@ -120,13 +139,22 @@ libres {
 }
 
 buildkonfig {
-    packageName = "com.myapplication.common"
+    packageName = "com.spelldnd.common"
 
     defaultConfigs {
-        buildConfigField(
-            STRING,
-            "API_KEY",
-            gradleLocalProperties(rootDir).getProperty("api_key") ?: ""
-        )
+//        buildConfigField(
+//            STRING,
+//            "API_KEY",
+//            gradleLocalProperties(rootDir).getProperty("api_key") ?: ""
+//        )
+    }
+}
+
+sqldelight {
+    databases {
+        create("SpellDndDatabase") {
+            packageName.set("com.spelldnd.shared.data.cashe.sqldelight")
+            srcDirs.setFrom("src/commonMain/kotlin")
+        }
     }
 }

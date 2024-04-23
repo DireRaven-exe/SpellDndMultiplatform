@@ -1,5 +1,5 @@
 import androidx.compose.ui.window.ComposeUIViewController
-import main.MainScreen
+import com.spelldnd.shared.main.MainScreen
 import moe.tlaster.precompose.PreComposeApplication
 
 //actual fun getPlatformName(): String = "iOS"

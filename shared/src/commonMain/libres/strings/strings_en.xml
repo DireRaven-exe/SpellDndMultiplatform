@@ -92,5 +92,9 @@
     <string name="yes">Yes</string>
     <string name="archetype">Archetype</string>
     <string name="accept">Accept</string>
+    <string name="IsRitual">Ritual</string>
+    <string name="NeedConcentrationShort">Concentration</string>
+    <string name="sharedTittle">Share</string>
+    <string name="sharedText">Will be here soon :)</string>
 
 </resources>

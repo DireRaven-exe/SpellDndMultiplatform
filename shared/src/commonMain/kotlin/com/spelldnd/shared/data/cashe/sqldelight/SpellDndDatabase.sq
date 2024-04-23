@@ -1,0 +1,43 @@
+CREATE TABLE FavoriteSpellEntity(
+    slug TEXT PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    desc TEXT,
+    higher_level TEXT,
+    range TEXT,
+    components TEXT,
+    material TEXT,
+    ritual TEXT,
+    duration TEXT,
+    concentration TEXT,
+    casting_time TEXT,
+    level TEXT,
+    level_int INTEGER,
+    school TEXT,
+    dnd_class TEXT,
+    archetype TEXT
+);
+
+insertFavoriteSpell:
+INSERT OR REPLACE INTO FavoriteSpellEntity(slug, name, desc, higher_level, range, components, material, ritual, duration, concentration, casting_time, level, level_int, school, dnd_class, archetype)
+VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+
+getAllFavoriteSpells:
+SELECT * FROM FavoriteSpellEntity
+ORDER BY name DESC;
+
+getFavoriteSpell:
+SELECT * FROM FavoriteSpellEntity
+WHERE slug=?;
+
+deleteFavoriteSpell:
+DELETE FROM FavoriteSpellEntity
+WHERE slug=?;
+
+deleteAllFavoriteSpells:
+DELETE FROM FavoriteSpellEntity;
+
+isSpellFavorite:
+SELECT COUNT(1)
+FROM FavoriteSpellEntity
+WHERE slug=?;
+

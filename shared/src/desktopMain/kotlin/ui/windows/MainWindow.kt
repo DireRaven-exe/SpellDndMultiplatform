@@ -6,8 +6,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
-import main.MainScreen
+import com.spelldnd.shared.main.MainScreen
 import moe.tlaster.precompose.PreComposeWindow
+import java.awt.Window
 
 @Composable
 fun MainWindow(applicationScope: ApplicationScope) {
@@ -16,9 +17,10 @@ fun MainWindow(applicationScope: ApplicationScope) {
         title = "spelldnd",
         state = rememberWindowState(
             position = WindowPosition.Aligned(Alignment.Center),
-            width = 1080.dp, // or Dp.Unspecified,
-            height = 800.dp, // or Dp.Unspecified,
-        )
+            width = 1152.dp,
+            height = 864.dp
+        ),
+        resizable = true
     ) {
         MainScreen()
     }
