@@ -1,10 +1,12 @@
 package com.spelldnd.shared.utils
 
 import com.russhwolf.settings.ExperimentalSettingsApi
+import com.spelldnd.shared.data.cashe.datasources.FavoritesRepositoryImpl
 import com.spelldnd.shared.data.cashe.datasources.SettingsRepositoryImpl
 import com.spelldnd.shared.data.cashe.datasources.SpellDetailRepositoryImpl
 import com.spelldnd.shared.data.cashe.datasources.SpellsRepositoryImpl
 import com.spelldnd.shared.data.cashe.sqldelight.daos.FavoriteSpellDao
+import com.spelldnd.shared.domain.repositories.FavoritesRepository
 import com.spelldnd.shared.domain.repositories.SettingsRepository
 import com.spelldnd.shared.domain.repositories.SpellDetailRepository
 import com.spelldnd.shared.domain.repositories.SpellsRepository
@@ -24,11 +26,12 @@ import kotlinx.serialization.json.Json
 import com.spelldnd.shared.main.MainViewModel
 import com.spelldnd.shared.utils.Constants.BASE_URL
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import com.spelldnd.shared.screens.details.DetailsViewModel
 import com.spelldnd.shared.screens.home.HomeViewModel
 import com.spelldnd.shared.screens.settings.SettingsViewModel
+import com.spelldnd.shared.screens.favorites.FavoritesViewModel
+import org.koin.core.module.dsl.singleOf
 
 @OptIn(ExperimentalSettingsApi::class)
 fun commonModule(enableNetworkLogs: Boolean) = module {
@@ -80,6 +83,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
 
     single<SpellsRepository> { SpellsRepositoryImpl(httpClient = get()) }
     single<SettingsRepository> { SettingsRepositoryImpl(observableSettings = get()) }
+    single<FavoritesRepository> { FavoritesRepositoryImpl(favoriteSpellDao = get()) }
     single<SpellDetailRepository> {
         SpellDetailRepositoryImpl(httpClient = get(), favoriteSpellDao = get())
     }
@@ -88,6 +92,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     singleOf(::HomeViewModel)
     singleOf(::DetailsViewModel)
     singleOf(::SettingsViewModel)
+    singleOf(::FavoritesViewModel)
 }
 
 expect fun platformModule(): Module

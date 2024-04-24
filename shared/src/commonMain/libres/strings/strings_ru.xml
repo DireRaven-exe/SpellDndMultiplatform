@@ -78,7 +78,7 @@
     <string name="theme">Тема</string>
     <string name="screen_pin_card">Закреплено</string>
     <string name="add_filters">Добавить фильтры</string>
-    <string name="homebrew">Самодельное</string>
+    <string name="homebrew">Homebrew</string>
 
     <!--    Create Card -->
     <string name="add_card">Добавить карточку</string>

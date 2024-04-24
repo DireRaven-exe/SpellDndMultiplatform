@@ -32,3 +32,10 @@ data class DetailsUiState(
     val spellDetail: SpellDetail? = null,
     var isFavorite: Boolean? = false
 )
+
+data class FavouritesUiState(
+    val isLoading: Boolean = true,
+    val error: String? = null,
+    val favoriteSpells: List<SpellDetail>? = emptyList(),
+    val homebrewSpells: List<SpellDetail>? = emptyList()
+)

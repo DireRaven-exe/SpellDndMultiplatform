@@ -46,4 +46,37 @@ class FavoriteSpellDao (private val databaseDriverFactory: DatabaseDriverFactory
 
     fun isSpellFavorite(slug: String) = dbQuery.isSpellFavorite(slug = slug).executeAsOneOrNull()
 
+    fun saveHomebrewSpell(spell: SpellDetail) {
+        dbQuery.transaction {
+            dbQuery.insertHomebrewSpell(
+                slug = spell.slug!!,
+                name = spell.name!!,
+                desc = spell.desc,
+                higher_level = spell.higher_level,
+                range = spell.range,
+                components = spell.components,
+                material = spell.material,
+                ritual = spell.ritual,
+                duration = spell.duration,
+                concentration = spell.concentration,
+                casting_time = spell.casting_time,
+                level = spell.level,
+                level_int = spell.level_int!!.toLong(),
+                school = spell.school,
+                dnd_class = spell.dnd_class,
+                archetype = spell.archetype
+            )
+        }
+    }
+
+    fun getAllHomebrewSpells() = dbQuery.getAllHomebrewSpells().asFlow().mapToList(Dispatchers.IO)
+
+    fun getHomebrewSpell(slug: String) = dbQuery.getHomebrewSpell(slug = slug).executeAsOne()
+
+    fun deleteHomebrewSpell(slug: String) = dbQuery.deleteHomebrewSpell(slug = slug)
+
+    fun deleteAllHomebrewSpells(slug: String) = dbQuery.deleteAllHomebrewSpells()
+
+    fun isSpellHomebrew(slug: String) = dbQuery.isSpellHomebrew(slug = slug).executeAsOneOrNull()
+
 }

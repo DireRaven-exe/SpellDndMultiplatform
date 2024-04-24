@@ -68,7 +68,7 @@ val CustomLightColors = CustomColorsPalette(
     primaryBackground = Color(0xFFF2F4F5),
     primaryText = Color(0xff050505),
 
-    secondaryBackground = Color(0xCC7A8A99),
+    secondaryBackground = Color(0xffe0e0e0),
     secondaryText = Color(0xff090909),
 
     tintColor = Color(0xFF485866),
