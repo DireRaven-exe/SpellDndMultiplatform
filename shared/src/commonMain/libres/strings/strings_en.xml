@@ -96,5 +96,9 @@
     <string name="NeedConcentrationShort">Concentration</string>
     <string name="sharedTittle">Share</string>
     <string name="sharedText">Will be here soon :)</string>
-
+    <string name="personalization">Personalization</string>
+    <string name="changeTheme">Change theme</string>
+    <string name="aboutAppTitle">About SpellDnd</string>
+    <string name="aboutAppText">SpellDnd is an application that allows the user to easily and simply find and obtain information about the spell section from the tabletop role-playing game Dungeons and Dragons. If you want to support financially, here is </string>
+    <string name="boostyLink">My boosty</string>
 </resources>

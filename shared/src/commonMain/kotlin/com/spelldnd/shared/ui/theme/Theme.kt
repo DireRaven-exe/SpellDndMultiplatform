@@ -28,6 +28,14 @@ private val DarkColorPalette = darkColorScheme(
     background = darkSurface
 )
 
+private val LightColorPalette = darkColorScheme(
+    primary = darkPrimaryColor,
+    secondary = darkPrimaryColor,
+    surface = md_theme_light_surface,
+    onSurface = darkSurface,
+    background = md_theme_light_background
+)
+
 val CustomDarkColors = CustomColorsPalette(
     primaryBackground = Color(0xff050505),
     primaryText = Color(0xFFF2F4F5),
@@ -54,6 +62,34 @@ val CustomDarkColors = CustomColorsPalette(
 
     checkBoxContentNotSelected = Color(0xFF000000),
     checkBoxContentSelected = Color(0xffeefdf7),
+)
+
+val CustomLightColors = CustomColorsPalette(
+    primaryBackground = Color(0xFFF2F4F5),
+    primaryText = Color(0xff050505),
+
+    secondaryBackground = Color(0xCC7A8A99),
+    secondaryText = Color(0xff090909),
+
+    tintColor = Color(0xFF485866),
+
+    primaryIcon = Color(0xFFFFFFFF),
+    secondaryIcon = Color(0xFF6D6D6D),
+
+    primaryButtonTextColor = Color(0xFF5EB4F6),
+    secondaryButtonTextColor = Color(0xFF7993AA),
+
+    buttonContainer = Color(0xFF03D9C5),
+    buttonContent = Color(0xFF000000),
+
+    cardInfoBackground = Color(0xffd8d3d3),
+    cardInfoTextPrimary = Color(0xff111111),
+
+    checkBoxContainerNotSelected = Color(0xFF000000),
+    checkBoxContainerSelected = Color(0xff484848),
+
+    checkBoxContentNotSelected = Color(0xffeefdf7),
+    checkBoxContentSelected = Color(0xffd8d3d3),
 )
 
 
@@ -116,13 +152,13 @@ fun SpellDndMultiPlatformTheme(
     content: @Composable () -> Unit
 ) {
     val colors = if (!useDarkTheme) {
-        lightColors
+        LightColorPalette
     } else {
         DarkColorPalette
     }
 
     val customColorsPalette = if (!useDarkTheme) {
-        CustomDarkColors
+        CustomLightColors
     } else {
         CustomDarkColors
     }

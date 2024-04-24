@@ -11,8 +11,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import com.spelldnd.shared.utils.SettingsUiState
 
-class SettingsViewModel constructor(private val settingsRepository: SettingsRepository) :
-    KoinComponent {
+class SettingsViewModel constructor(private val settingsRepository: SettingsRepository) : KoinComponent {
 
     private val _settingsUiState = MutableStateFlow(SettingsUiState(isLoading = true))
     val settingsUiState = _settingsUiState.asStateFlow()
@@ -21,6 +20,11 @@ class SettingsViewModel constructor(private val settingsRepository: SettingsRepo
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         _settingsUiState.update { it.copy(isLoading = false, error = exception.message) }
+    }
+
+    init {
+        getThemePreference()
+        getImageQualityPreference()
     }
 
     fun savePreferenceSelection(key: String, selection: Int) =
