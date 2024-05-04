@@ -30,12 +30,19 @@ data class DetailsUiState(
     var isLoading: Boolean = true,
     val error: String? = null,
     val spellDetail: SpellDetail? = null,
-    var isFavorite: Boolean? = false
+    var isFavorite: Boolean? = false,
+    var isHomebrew: Boolean? = false
 )
 
 data class FavouritesUiState(
     val isLoading: Boolean = true,
     val error: String? = null,
-    val favoriteSpells: List<SpellDetail>? = emptyList(),
-    val homebrewSpells: List<SpellDetail>? = emptyList()
+    val spells: List<SpellDetail>? = emptyList(),
+
+    )
+
+data class HomebrewUiState(
+    val isLoading: Boolean = true,
+    val error: String? = null,
+    val spells: List<SpellDetail>? = emptyList()
 )

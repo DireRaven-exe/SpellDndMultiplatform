@@ -1,7 +1,5 @@
 package com.spelldnd.shared.domain.models
 
-import kotlinx.serialization.SerialName
-
 data class SpellDetail(
     val slug: String? = null,
     val name: String? = null,
@@ -20,3 +18,5 @@ data class SpellDetail(
     val dnd_class: String? = null,
     val archetype: String? = null,
 )
+
+

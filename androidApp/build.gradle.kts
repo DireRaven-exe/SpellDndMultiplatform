@@ -24,8 +24,8 @@ android {
         applicationId = "com.spelldnd"
         minSdk = (findProperty("android.minSdk") as String).toInt()
         targetSdk = (findProperty("android.targetSdk") as String).toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "1.5.0.1"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -43,7 +43,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.3"
     }
-    namespace = "com.myapplication.spelldnd"
+    namespace = "com.spelldnd"
 }
 
 dependencies {

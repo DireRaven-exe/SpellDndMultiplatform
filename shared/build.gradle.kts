@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.kotlinX.serialization.plugin)
     alias(libs.plugins.buildKonfig)
     alias(libs.plugins.compose)
-
     alias(libs.plugins.sqlDelight)
 }
 
@@ -40,7 +39,6 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 api(compose.components.resources)
                 api(compose.materialIconsExtended)
-                //implementation(compose.foundation)
                 implementation(libs.kotlinX.coroutines)
 
                 api(libs.ktor.core)
@@ -57,7 +55,8 @@ kotlin {
 
                 implementation(libs.multiplatformSettings.noArg)
                 implementation(libs.multiplatformSettings.coroutines)
-                //implementation("ch.qos.logback:logback-classic:1.4.14")
+                api(libs.resources)
+                api(libs.resources.compose)
 
                 api(libs.napier)
 
@@ -106,13 +105,14 @@ kotlin {
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
+                implementation(libs.sqlDelight.jvm)
             }
         }
     }
 }
 
 android {
-    compileSdk = 34//(findProperty("android.compileSdk") as String).toInt()
+    compileSdk = 34
     namespace = "com.spelldnd.common"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -120,7 +120,7 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        minSdk = 24//(findProperty("android.minSdk") as String).toInt()
+        minSdk = 24
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -142,11 +142,6 @@ buildkonfig {
     packageName = "com.spelldnd.common"
 
     defaultConfigs {
-//        buildConfigField(
-//            STRING,
-//            "API_KEY",
-//            gradleLocalProperties(rootDir).getProperty("api_key") ?: ""
-//        )
     }
 }
 

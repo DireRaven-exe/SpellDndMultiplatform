@@ -7,5 +7,5 @@ interface FavoritesRepository {
 
     suspend fun getFavoriteSpells() : Flow<List<SpellDetail>>
 
-    suspend fun getHomebrewSpells() : Flow<List<SpellDetail>>
+
 }

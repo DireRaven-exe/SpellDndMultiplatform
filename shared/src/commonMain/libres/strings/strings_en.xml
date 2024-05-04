@@ -25,6 +25,7 @@
     <string name="sorcerer">Sorcerer</string>
     <string name="warlock">Warlock</string>
     <string name="wizard">Wizard</string>
+    <string name="artificer"> Изобретатель </string>
     <string name="empty">Empty</string>
 
     <!-- BottomNavigation -->
@@ -92,7 +93,7 @@
     <string name="yes">Yes</string>
     <string name="archetype">Archetype</string>
     <string name="accept">Accept</string>
-    <string name="IsRitual">Ritual</string>
+    <string name="isRitualShort">Ritual</string>
     <string name="NeedConcentrationShort">Concentration</string>
     <string name="sharedTittle">Share</string>
     <string name="sharedText">Will be here soon :)</string>

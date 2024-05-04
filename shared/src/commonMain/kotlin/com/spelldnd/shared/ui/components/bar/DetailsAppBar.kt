@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.DeleteForever
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Share
@@ -41,14 +43,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.spelldnd.common.MainRes
 import com.spelldnd.shared.domain.models.SpellDetail
-import com.spelldnd.shared.ui.components.view.spell.ConcentrationIcon
-import com.spelldnd.shared.ui.components.view.spell.RitualIcon
-import com.spelldnd.shared.ui.components.view.spell.SharedDialog
+import com.spelldnd.shared.ui.components.view.ConcentrationIcon
+import com.spelldnd.shared.ui.components.view.RitualIcon
+import com.spelldnd.shared.ui.components.view.SharedDialog
 import com.spelldnd.shared.ui.theme.LocalCustomColorsPalette
 import com.spelldnd.shared.utils.DetailsUiState
 import com.spelldnd.shared.utils.SchoolColorPair
 import com.spelldnd.shared.utils.SchoolIcon
+import io.github.aakira.napier.Napier
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,7 +62,8 @@ fun DetailsAppBar(
     spellDetailsState: DetailsUiState?,
     onNavigationIconClick: () -> Unit,
     onShareIconClick: () -> Unit,
-    onFavoriteIconClick: (SpellDetail, Boolean?) -> Unit
+    onDeleteHomebrewIconClick: (SpellDetail) -> Unit,
+    onFavoriteIconClick: (SpellDetail) -> Unit
 ) {
     val scrollProgress = collapsingScrollState.toolbarState.progress
 
@@ -68,12 +73,22 @@ fun DetailsAppBar(
     val dominantTextColor by remember { mutableStateOf(defaultDominantTextColor) }
 
     var spellDetails = spellDetailsState?.spellDetail
-    var isFavorite by remember { mutableStateOf(spellDetailsState?.isFavorite) }
+    var isFavorite= spellDetailsState?.isFavorite
+    var isHomebrew = spellDetailsState?.isHomebrew
     val isVisibleShareDialog = remember { mutableStateOf(false) }
 
     LaunchedEffect(spellDetailsState) {
-        isFavorite = spellDetailsState?.isFavorite
         spellDetails = spellDetailsState?.spellDetail
+    }
+
+    LaunchedEffect(isFavorite) {
+        isFavorite = spellDetailsState?.isFavorite
+        Napier.e("IS FAVORITE? $isFavorite")
+    }
+
+    LaunchedEffect(isHomebrew) {
+        isHomebrew = spellDetailsState?.isHomebrew
+        Napier.e("IS HOMEBREW? $isHomebrew")
     }
 
     val backgroundColor by animateColorAsState(
@@ -123,7 +138,7 @@ fun DetailsAppBar(
                         contentDescription = null,
                         modifier = Modifier
                             .size(32.dp),
-                        tint = LocalCustomColorsPalette.current.primaryIcon
+                        tint = LocalCustomColorsPalette.current.secondaryIcon
                     )
                 }
                 Spacer(modifier = Modifier.width(15.dp))
@@ -131,16 +146,16 @@ fun DetailsAppBar(
                     .align(Alignment.CenterVertically)
                 ) {
                     Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                        if (spellDetails!!.ritual == "да" && spellDetails!!.concentration == "да") {
-                            ConcentrationIcon()
+                        if (spellDetails?.ritual?.lowercase() == MainRes.string.yes && spellDetails?.concentration?.lowercase() == MainRes.string.yes) {
+                            ConcentrationIcon(iconColor = LocalCustomColorsPalette.current.primaryIcon)
                             Spacer(modifier = Modifier.width(3.dp))
-                            RitualIcon()
+                            RitualIcon(iconColor = LocalCustomColorsPalette.current.primaryIcon)
                             Spacer(modifier = Modifier.width(3.dp))
-                        } else if (spellDetails!!.ritual == "да") {
-                            RitualIcon()
+                        } else if (spellDetails?.ritual?.lowercase() == MainRes.string.yes) {
+                            RitualIcon(iconColor = LocalCustomColorsPalette.current.primaryIcon)
                             Spacer(modifier = Modifier.width(3.dp))
-                        } else if (spellDetails!!.concentration == "да") {
-                            ConcentrationIcon()
+                        } else if (spellDetails?.concentration?.lowercase() == MainRes.string.yes) {
+                            ConcentrationIcon(iconColor = LocalCustomColorsPalette.current.primaryIcon)
                             Spacer(modifier = Modifier.width(3.dp))
                         }
                         Text(
@@ -179,7 +194,7 @@ fun DetailsAppBar(
 
 
     TopAppBar(
-        modifier = Modifier
+        modifier = Modifier.background(Color.Transparent)
             .fillMaxWidth(),
         title = {
             Text(
@@ -210,11 +225,22 @@ fun DetailsAppBar(
                     tint = MaterialTheme.colorScheme.onSurface
                 )
             }
+            if (isHomebrew == true) {
+                IconButton(onClick = {
+                    onNavigationIconClick()
+                    onDeleteHomebrewIconClick(spellDetails!!)
+                }) {
+                    Icon(
+                        imageVector = Icons.Rounded.DeleteForever,
+                        contentDescription = "Share",
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
 
             IconButton(
                 onClick = {
-                    isFavorite?.let { isFavorite = !it }
-                    onFavoriteIconClick(spellDetails!!, isFavorite)
+                    onFavoriteIconClick(spellDetails!!)
                 }
             ) {
                 Icon(

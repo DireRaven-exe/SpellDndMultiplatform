@@ -28,25 +28,25 @@ private val DarkColorPalette = darkColorScheme(
     background = darkSurface
 )
 
-private val LightColorPalette = darkColorScheme(
+private val LightColorPalette = lightColorScheme(
     primary = darkPrimaryColor,
     secondary = darkPrimaryColor,
-    surface = md_theme_light_surface,
+    surface = contentColor,
     onSurface = darkSurface,
-    background = md_theme_light_background
+    background = contentColor
 )
 
 val CustomDarkColors = CustomColorsPalette(
     primaryBackground = Color(0xff050505),
     primaryText = Color(0xFFF2F4F5),
 
-    secondaryBackground = Color(0xff090909),
+    containerSecondary = Color(0xff090909),
     secondaryText = Color(0xCC7A8A99),
 
     tintColor = Color(0xFF485866),
 
     primaryIcon = Color(0xFFFFFFFF),
-    secondaryIcon = Color(0xFF6D6D6D),
+    secondaryIcon = Color(0xfff6f6f6),
 
     primaryButtonTextColor = Color(0xFF5EB4F6),
     secondaryButtonTextColor = Color(0xFF7993AA),
@@ -68,13 +68,13 @@ val CustomLightColors = CustomColorsPalette(
     primaryBackground = Color(0xFFF2F4F5),
     primaryText = Color(0xff050505),
 
-    secondaryBackground = Color(0xffe0e0e0),
+    containerSecondary = Color(0xffe0e0e0),
     secondaryText = Color(0xff090909),
 
     tintColor = Color(0xFF485866),
 
-    primaryIcon = Color(0xFFFFFFFF),
-    secondaryIcon = Color(0xFF6D6D6D),
+    primaryIcon = Color(0xff000000),
+    secondaryIcon = Color(0xfff6f6f6),
 
     primaryButtonTextColor = Color(0xFF5EB4F6),
     secondaryButtonTextColor = Color(0xFF7993AA),
@@ -97,9 +97,11 @@ private val lightColors = lightColorScheme(
     primary = md_theme_light_primary,
     secondary = md_theme_light_secondary,
     background = md_theme_light_background,
-    surface = md_theme_light_surface,
+    surface = contentColor,
     onError = md_theme_light_onError,
 )
+
+
 
 //val CustomLightColors = CustomColorsPalette(
 //    elevationBackground = md_theme_light_elevationBackground,
@@ -115,11 +117,23 @@ private val lightColors = lightColorScheme(
 //    disabledPrimaryButton = md_theme_light_disabledPrimaryButton
 //)
 
+data class SpellCardPallete(
+    val containerColor: Color = Color.Unspecified,
+    val textColor: Color = Color.Unspecified,
+    val iconColor: Color = Color.Unspecified
+)
+
+val spellCardPallete = SpellCardPallete(
+    containerColor = Color(0xff050505),
+    textColor = contentColor,
+    iconColor = contentColor
+)
+
 data class CustomColorsPalette (
     val primaryBackground: Color = Color.Unspecified,
     val primaryText: Color = Color.Unspecified,
 
-    val secondaryBackground: Color = Color.Unspecified,
+    val containerSecondary: Color = Color.Unspecified,
     val secondaryText: Color = Color.Unspecified,
 
     val tintColor: Color = Color.Unspecified,
@@ -145,6 +159,7 @@ data class CustomColorsPalette (
 
 val LocalCustomColorsPalette = staticCompositionLocalOf { CustomColorsPalette() }
 
+val LocalSpellCardPalette = staticCompositionLocalOf { SpellCardPallete() }
 
 @Composable
 fun SpellDndMultiPlatformTheme(
@@ -173,7 +188,8 @@ fun SpellDndMultiPlatformTheme(
     )
 
     CompositionLocalProvider(
-        LocalCustomColorsPalette provides customColorsPalette
+        LocalCustomColorsPalette provides customColorsPalette,
+        LocalSpellCardPalette provides spellCardPallete
     ) {
         MaterialTheme(
             colorScheme = colors,

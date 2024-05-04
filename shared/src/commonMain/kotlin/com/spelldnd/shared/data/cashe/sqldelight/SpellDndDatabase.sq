@@ -1,4 +1,4 @@
-CREATE TABLE FavoriteSpellEntity(
+CREATE TABLE IF NOT EXISTS FavoriteSpellEntity(
     slug TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     desc TEXT,
@@ -42,7 +42,7 @@ FROM FavoriteSpellEntity
 WHERE slug=?;
 
 
-CREATE TABLE HomebrewSpellEntity(
+CREATE TABLE IF NOT EXISTS HomebrewSpellEntity(
     slug TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     desc TEXT,

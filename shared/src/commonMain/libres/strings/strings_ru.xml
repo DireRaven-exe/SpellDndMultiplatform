@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">spellDnd (На русском)</string>
+    <string name="app_name">spellDnd</string>
 
     <!-- Школы заклинаний -->
     <string name="necromancy">некромантия</string>
@@ -25,6 +25,7 @@
     <string name="sorcerer">Чародей</string>
     <string name="warlock">Колдун</string>
     <string name="wizard">Волшебник</string>
+    <string name="artificer"> Изобретатель </string>
     <string name="empty">Отсутствует</string>
 
     <!-- BottomNavigation -->
@@ -81,7 +82,7 @@
     <string name="homebrew">Homebrew</string>
 
     <!--    Create Card -->
-    <string name="add_card">Добавить карточку</string>
+    <string name="add_card">Создать заклинание</string>
     <string name="create_card">Создание карточки</string>
     <string name="cantrip">Заговор</string>
     <string name="spellName">Название</string>
@@ -89,11 +90,11 @@
     <string name="spellHightLevel">На больших уровнях</string>
     <string name="isRitual">Это ритуал?</string>
     <string name="needConcentration">Нужна ли концентрация?</string>
-    <string name="no">Нет</string>
-    <string name="yes">Да</string>
+    <string name="no">нет</string>
+    <string name="yes">да</string>
     <string name="archetype">Архетип</string>
     <string name="accept">Принять</string>
-    <string name="IsRitual">Ритуал</string>
+    <string name="isRitualShort">Ритуал</string>
     <string name="NeedConcentrationShort">Концентрация</string>
     <string name="sharedTittle">Поделиться</string>
     <string name="sharedText">В скором времени тут будет :)</string>

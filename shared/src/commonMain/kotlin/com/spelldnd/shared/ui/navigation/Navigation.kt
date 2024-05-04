@@ -5,12 +5,12 @@ import androidx.compose.runtime.Composable
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.path
-import com.spelldnd.shared.screens.details.DetailsScreen
-import com.spelldnd.shared.screens.favorites.FavoritesScreen
-import com.spelldnd.shared.screens.home.HomeScreen
-import com.spelldnd.shared.screens.settings.SettingsScreen
+import com.spelldnd.shared.ui.screens.details.DetailsScreen
+import com.spelldnd.shared.ui.screens.favorites.FavoritesScreen
+import com.spelldnd.shared.ui.screens.home.HomeScreen
+import com.spelldnd.shared.ui.screens.homebrew.HomebrewScreen
+import com.spelldnd.shared.ui.screens.settings.SettingsScreen
 import com.spelldnd.shared.utils.WindowSize
-import io.github.aakira.napier.Napier
 
 @Composable
 fun Navigation(
@@ -29,7 +29,8 @@ fun Navigation(
         scene(NavigationItem.Favorites.route) {
             FavoritesScreen(
                 navigator = navigator,
-                windowSize = windowSize
+                windowSize = windowSize,
+                paddingValues = paddingValues
             )
         }
 
@@ -41,6 +42,14 @@ fun Navigation(
             backStackEntry.path<String>("slug")?.let { slug ->
                 DetailsScreen(navigator = navigator, windowSize = windowSize, slug = slug)
             }
+        }
+
+        scene(NavigationItem.Homebrew.route) {
+            HomebrewScreen(
+                navigator = navigator,
+                windowSize = windowSize,
+                paddingValues = paddingValues
+            )
         }
     }
 }

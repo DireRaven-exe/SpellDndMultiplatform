@@ -6,7 +6,7 @@ import com.spelldnd.shared.data.cashe.sqldelight.SpellDndDatabase
 
 actual class DatabaseDriverFactory {
     actual fun createDriver(): SqlDriver {
-        return JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY).also {
+        return JdbcSqliteDriver("jdbc:sqlite:SpellDnd.db").also {
             SpellDndDatabase.Schema.create(it)
         }
     }
