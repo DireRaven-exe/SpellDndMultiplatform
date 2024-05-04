@@ -19,12 +19,20 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "MainKt"
+        mainClass = "com.spelldnd.MainKt"
 
         nativeDistributions {
+            modules("java.sql")
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "KotlinMultiplatformComposeDesktopApplication"
+            packageName = "spelldnd"
             packageVersion = "1.0.0"
+
+
+            val iconsRoot = project.file("../shared/src/desktopMain/resources/images")
+
+            windows {
+                iconFile.set(iconsRoot.resolve("ico-windows.ico"))
+            }
         }
     }
 }

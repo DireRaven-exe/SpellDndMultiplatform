@@ -1,13 +1,20 @@
-plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("org.jetbrains.compose")
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0-Beta1"
-    id("io.github.skeptick.libres")
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
+plugins {
+    id("io.github.skeptick.libres")
+    kotlin("multiplatform")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlinX.serialization.plugin)
+    alias(libs.plugins.buildKonfig)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.sqlDelight)
 }
 
+@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    kotlin.applyDefaultHierarchyTemplate()
     androidTarget()
 
     jvm("desktop")
@@ -26,56 +33,94 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.material3)
+                api(compose.runtime)
+                api(compose.foundation)
+                api(compose.material3)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.components.resources)
-                implementation("io.ktor:ktor-client-core:2.3.7")
-                implementation("io.ktor:ktor-client-content-negotiation:2.3.7")
-                implementation("io.ktor:ktor-client-json:2.3.7")
-                implementation("io.ktor:ktor-client-serialization:2.3.7")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.7")
-                implementation("io.ktor:ktor-client-cio:2.3.7")
-                implementation("io.github.skeptick.libres:libres-compose:1.2.2")
+                api(compose.components.resources)
+                api(compose.materialIconsExtended)
+                implementation(libs.kotlinX.coroutines)
+
+                api(libs.ktor.core)
+                implementation(libs.ktor.contentNegotiation)
+                implementation(libs.ktor.json)
+                implementation(libs.ktor.logging)
+
+                api(libs.koin.core)
+                implementation(libs.koin.compose)
+
+                implementation(libs.kotlinX.serializationJson)
+
+                implementation(libs.kotlinX.dateTime)
+
+                implementation(libs.multiplatformSettings.noArg)
+                implementation(libs.multiplatformSettings.coroutines)
+                api(libs.resources)
+                api(libs.resources.compose)
+
+                api(libs.napier)
+
+                implementation(libs.imageLoader)
+
+                api(libs.preCompose)
+                api(libs.preCompose.viewmodel)
+
+                implementation(libs.sqlDelight.coroutine)
+
+                implementation(libs.libres.compose)
+
+                sourceSets["androidMain"].dependencies {
+                    implementation(libs.ktor.android)
+                    implementation(libs.sqlDelight.android)
+                }
+
+                sourceSets["desktopMain"].dependencies {
+                    implementation(libs.sqlDelight.jvm)
+                }
+
+                sourceSets["iosMain"].dependencies {
+                    implementation(libs.ktor.darwin)
+                    implementation(libs.sqlDelight.native)
+                }
 
             }
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.activity:activity-compose:1.8.2")
-                api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.12.0")
+                api(libs.activity.compose)
+                api(libs.appcompat)
+                api(libs.androidX.core)
+                implementation(libs.ktor.android)
             }
         }
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-        }
+//        val iosMain by creating {
+//            dependsOn(commonMain)
+//            iosX64Main.dependsOn(this)
+//            iosArm64Main.dependsOn(this)
+//            iosSimulatorArm64Main.dependsOn(this)
+//        }
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
+                implementation(libs.sqlDelight.jvm)
             }
         }
     }
 }
 
 android {
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "com.myapplication.common"
+    compileSdk = 34
+    namespace = "com.spelldnd.common"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
+        minSdk = 24
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -91,4 +136,20 @@ libres {
     generateNamedArguments = true // false by default
     baseLocaleLanguageCode = "ru" // "en" by default
     camelCaseNamesForAppleFramework = false // false by default
+}
+
+buildkonfig {
+    packageName = "com.spelldnd.common"
+
+    defaultConfigs {
+    }
+}
+
+sqldelight {
+    databases {
+        create("SpellDndDatabase") {
+            packageName.set("com.spelldnd.shared.data.cashe.sqldelight")
+            srcDirs.setFrom("src/commonMain/kotlin")
+        }
+    }
 }

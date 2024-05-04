@@ -25,6 +25,7 @@
     <string name="sorcerer">Sorcerer</string>
     <string name="warlock">Warlock</string>
     <string name="wizard">Wizard</string>
+    <string name="artificer"> Изобретатель </string>
     <string name="empty">Empty</string>
 
     <!-- BottomNavigation -->
@@ -55,7 +56,7 @@
     <string name="duration">Duration</string>
     <string name="casting_time">Casting Time</string>
     <string name="components">Components</string>
-    <string name="higher_level"><b>"Higher level. "</b></string>
+    <string name="higher_level">Higher level</string>
     <string name="material">Material</string>
     <string name="none_material">None</string>
 
@@ -92,5 +93,13 @@
     <string name="yes">Yes</string>
     <string name="archetype">Archetype</string>
     <string name="accept">Accept</string>
-
+    <string name="isRitualShort">Ritual</string>
+    <string name="NeedConcentrationShort">Concentration</string>
+    <string name="sharedTittle">Share</string>
+    <string name="sharedText">Will be here soon :)</string>
+    <string name="personalization">Personalization</string>
+    <string name="changeTheme">Change theme</string>
+    <string name="aboutAppTitle">About SpellDnd</string>
+    <string name="aboutAppText">SpellDnd is an application that allows the user to easily and simply find and obtain information about the spell section from the tabletop role-playing game Dungeons and Dragons. If you want to support financially, here is </string>
+    <string name="boostyLink">My boosty</string>
 </resources>
