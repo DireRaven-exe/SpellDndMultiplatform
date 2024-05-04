@@ -3,7 +3,7 @@ package com.spelldnd
 import androidx.compose.ui.window.application
 import com.spelldnd.shared.di.initKoin
 import org.koin.core.Koin
-import ui.windows.MainWindow
+import com.spelldnd.shared.MainWindow
 
 lateinit var koin: Koin
 fun main() {

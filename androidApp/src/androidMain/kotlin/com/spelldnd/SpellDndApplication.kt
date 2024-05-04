@@ -3,6 +3,7 @@ package com.spelldnd
 import android.app.Application
 import com.google.android.datatransport.BuildConfig
 import com.spelldnd.shared.di.initKoin
+import com.spelldnd.shared.utils.ContextUtils
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level

@@ -1,3 +1,5 @@
+package com.spelldnd.shared.utils
+
 import android.content.Context
 
 object ContextUtils {
