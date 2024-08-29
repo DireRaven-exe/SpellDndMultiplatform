@@ -58,6 +58,8 @@ kotlin {
                 api(libs.resources)
                 api(libs.resources.compose)
 
+                implementation(libs.google.accompanist.flowlayout)
+
                 api(libs.napier)
 
                 implementation(libs.imageLoader)

@@ -67,10 +67,6 @@ fun HomebrewScreen(
         WindowSize.MEDIUM -> 2
         else -> 3
     }
-    //СДЕЛАТЬ ОТДЕЛЬНЫЙ ЭКРАН ДЛЯ ПРОСМОТРА ИНФОРМАЦИИ О ХОУМБРЮ
-    //ОТСЛЕЖИВАТЬ ПУСТОЙ SLUG ИЛИ ПОВТОРНЫЙ + ПРОПИСЫВАТЬ ЕГО В КОНЦЕ
-    //ДОПИЛИТЬ ИНТЕРФЕЙС
-    //СЕРВЕР....
     LaunchedEffect(viewModel) {
         viewModel.getSpell()
     }

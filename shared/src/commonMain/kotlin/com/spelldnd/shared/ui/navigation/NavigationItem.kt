@@ -20,4 +20,5 @@ sealed class NavigationItem(
     object Details : NavigationItem("/details/{slug}", "Details", null)
 
     object Homebrew: NavigationItem("/homebrew", MainRes.string.homebrew, Icons.Default.Brush)
+    object SpellsCategory: NavigationItem("/home/{level}", "Levels", null)
 }

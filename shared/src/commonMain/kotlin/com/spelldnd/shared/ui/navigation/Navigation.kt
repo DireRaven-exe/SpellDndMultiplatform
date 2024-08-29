@@ -2,6 +2,7 @@ package com.spelldnd.shared.ui.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import com.spelldnd.shared.ui.screens.category.SpellsCategoryScreen
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.path
@@ -41,6 +42,13 @@ fun Navigation(
         scene(NavigationItem.Details.route) { backStackEntry ->
             backStackEntry.path<String>("slug")?.let { slug ->
                 DetailsScreen(navigator = navigator, windowSize = windowSize, slug = slug)
+            }
+        }
+
+        scene(NavigationItem.SpellsCategory.route) { backStackEntry ->
+            backStackEntry.path<String>("level")?.let { level ->
+                //DetailsScreen(navigator = navigator, windowSize = windowSize, slug = slug)
+                SpellsCategoryScreen(navigator = navigator, windowSize = windowSize, paddingValues = paddingValues, level = level)
             }
         }
 

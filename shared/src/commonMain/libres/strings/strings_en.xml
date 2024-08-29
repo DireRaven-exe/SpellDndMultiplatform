@@ -35,7 +35,7 @@
     <string name="settings">Settings</string>
 
     <!-- Home Screen -->
-    <string name="successfully_added">Successfully added</string>
+    <string name="successfully_added">successfully added to your favorites</string>
     <string name="successfully_deleted">Successfully deleted this spell from your favorites</string>
 
     <!--  Loading Screen  -->
@@ -102,4 +102,6 @@
     <string name="aboutAppTitle">About SpellDnd</string>
     <string name="aboutAppText">SpellDnd is an application that allows the user to easily and simply find and obtain information about the spell section from the tabletop role-playing game Dungeons and Dragons. If you want to support financially, here is </string>
     <string name="boostyLink">My boosty</string>
+    <string name="show_less">Show less</string>
+    <string name="show_more">Show more</string>
 </resources>

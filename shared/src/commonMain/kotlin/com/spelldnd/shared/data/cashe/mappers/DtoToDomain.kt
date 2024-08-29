@@ -1,11 +1,9 @@
 package com.spelldnd.shared.data.cashe.mappers
 
 import com.spelldnd.shared.data.cashe.SpellDetailDto
-import com.spelldnd.shared.data.cashe.SpellResponseDto
 import com.spelldnd.shared.data.cashe.network.models.ErrorResponseDto
 import com.spelldnd.shared.domain.models.ErrorResponse
 import com.spelldnd.shared.domain.models.SpellDetail
-import com.spelldnd.shared.domain.models.SpellResponse
 
 fun ErrorResponseDto.toDomain(): ErrorResponse {
     return ErrorResponse(
@@ -13,10 +11,6 @@ fun ErrorResponseDto.toDomain(): ErrorResponse {
         statusCode = this.statusCode,
         statusMessage = this.statusMessage
     )
-}
-
-fun SpellResponseDto.toDomain(): SpellResponse {
-    return SpellResponse(results = this.spells?.map { it.toDomain() })
 }
 
 fun SpellDetailDto.toDomain(): SpellDetail {

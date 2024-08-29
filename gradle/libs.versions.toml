@@ -1,4 +1,5 @@
 [versions]
+accompanistFlowlayoutVersion = "0.28.0"
 activityCompose = "1.9.0"
 appcompat = "1.6.1"
 kotlin = "1.9.23"
@@ -88,6 +89,7 @@ firebase-performance-plugin = { id = "com.google.firebase.firebase-perf", versio
 #Kotlin Multiplatform Lib Dependencies
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+google-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanistFlowlayoutVersion" }
 gradle-plugin = { module = "io.github.skeptick.libres:gradle-plugin", version.ref = "libresCompose" }
 kotlinX-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }

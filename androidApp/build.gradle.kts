@@ -24,8 +24,8 @@ android {
         applicationId = "com.spelldnd"
         minSdk = (findProperty("android.minSdk") as String).toInt()
         targetSdk = (findProperty("android.targetSdk") as String).toInt()
-        versionCode = 3
-        versionName = "1.5.0.1"
+        versionCode = 4
+        versionName = "1.5.0.2"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.performance)
+    //noinspection GradleDynamicVersion
+    implementation("com.my.tracker:mytracker-sdk:3.0.+")
 
     testImplementation(libs.jUnitKtx)
     testImplementation(libs.kotlinX.coroutines.test)

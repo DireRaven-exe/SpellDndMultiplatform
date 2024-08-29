@@ -35,8 +35,8 @@
     <string name="settings">Настройки</string>
 
     <!--Home Screen-->
-    <string name="successfully_added">Успешно добавлено</string>
-    <string name="successfully_deleted">Успешно удалёно из избранного</string>
+    <string name="successfully_added">успешно добавлено в избранное</string>
+    <string name="successfully_deleted">успешно удалёно из избранного</string>
 
     <!--  Loading Screen  -->
     <string name="please_wait">Пожалуйста, подождите…</string>
@@ -48,7 +48,7 @@
     <!--  Filters Screen  -->
     <string name="level">Уровень</string>
     <string name="school">Школа</string>
-    <string name="dnd_class">Класс</string>
+    <string name="dnd_class">Доступно классам</string>
     <string name="use_filters">Фильтрация</string>
 
     <!--  InfoCardSide  -->
@@ -92,7 +92,7 @@
     <string name="needConcentration">Нужна ли концентрация?</string>
     <string name="no">нет</string>
     <string name="yes">да</string>
-    <string name="archetype">Архетип</string>
+    <string name="archetype">Доступно подклассам</string>
     <string name="accept">Принять</string>
     <string name="isRitualShort">Ритуал</string>
     <string name="NeedConcentrationShort">Концентрация</string>
@@ -103,4 +103,6 @@
     <string name="aboutAppTitle">О приложении SpellDnd</string>
     <string name="aboutAppText">SpellDnd - приложение, позволяющее пользователю легко и просто находить и получать информацию о разделе заклинаний из настольной ролевой игры Dungeons and Dragons. \nЕсли хотите поддержать финансово, то вот:</string>
     <string name="boostyLink">Мой Бусти</string>
+    <string name="show_less">Скрыть</string>
+    <string name="show_more">Раскрыть</string>
 </resources>
