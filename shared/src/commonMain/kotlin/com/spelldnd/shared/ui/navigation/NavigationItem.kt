@@ -20,5 +20,7 @@ sealed class NavigationItem(
     object Details : NavigationItem("/details/{slug}", "Details", null)
 
     object Homebrew: NavigationItem("/homebrew", MainRes.string.homebrew, Icons.Default.Brush)
-    object SpellsCategory: NavigationItem("/home/{level}", "Levels", null)
+    object SpellsCategory : NavigationItem("/spells/category/{level}", "Levels", null) {
+        fun createRoute(level: Int) = "/spells/category/$level"
+    }
 }

@@ -10,13 +10,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import com.spelldnd.shared.utils.SettingsUiState
+import kotlinx.coroutines.IO
 
 class SettingsViewModel constructor(private val settingsRepository: SettingsRepository) : KoinComponent {
 
     private val _settingsUiState = MutableStateFlow(SettingsUiState(isLoading = true))
     val settingsUiState = _settingsUiState.asStateFlow()
 
-    private val viewModelScope = CoroutineScope(Dispatchers.Main)
+    private val viewModelScope = CoroutineScope(Dispatchers.IO)
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         _settingsUiState.update { it.copy(isLoading = false, error = exception.message) }

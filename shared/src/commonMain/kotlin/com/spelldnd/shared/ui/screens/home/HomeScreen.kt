@@ -3,29 +3,36 @@
 package com.spelldnd.shared.ui.screens.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,15 +42,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.spelldnd.common.MainRes
-import com.spelldnd.shared.ui.screens.search.SearchScreen
-import com.spelldnd.shared.ui.components.view.SpellShortView
+import com.spelldnd.shared.ui.navigation.NavigationItem
+import com.spelldnd.shared.ui.screens.search.CustomSearchView
+import com.spelldnd.shared.ui.theme.LocalCustomColorsPalette
 import com.spelldnd.shared.utils.WindowSize
+import io.github.skeptick.libres.compose.painterResource
 import moe.tlaster.precompose.navigation.Navigator
 import org.koin.compose.koinInject
 
@@ -61,120 +69,141 @@ fun HomeScreen(
         else -> 3
     }
 
+    var searchQuery by remember { mutableStateOf("") }
+
     LaunchedEffect(key1 = viewModel) {
         viewModel.fetchAllSpells()
     }
 
     val homeUiState = viewModel.homeUiState.collectAsState().value
-    val searchUiState = viewModel.searchUiState.collectAsState().value
 
-    var searchQuery by remember { mutableStateOf("") }
-    var activeState by remember { mutableStateOf(false) }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(
-            space = 6.dp,
-            alignment = Alignment.CenterVertically
-        )
-    ) {
-        SearchBar(
-            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface),
-            query = searchQuery,
-            onQueryChange = { searchQuery = it },
-            onSearch = { viewModel.searchSpell(searchQuery = it, searchUiState.selectedProperties.toList()) }, // Передаем выбранные свойства
-            active = activeState,
-            onActiveChange = {
-                activeState = it
-                // Сбрасываем выбранные свойства при закрытии поиска
-                if (!it) {
-                    viewModel.clearSelectedProperties()
-                }
-            },
-            placeholder = {
-                Text(
-                    text = MainRes.string.Search_spell,
-                    fontSize = 18.sp,
-                    style = MaterialTheme.typography.labelMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Start
-                )
-            },
-            leadingIcon = {
-                if (activeState) {
-                    IconButton(onClick = {
-                        activeState = false
+    Scaffold(
+        containerColor = LocalCustomColorsPalette.current.primaryBackground,
+        topBar = {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 24.dp)) {
+                CustomSearchView(
+                    search = searchQuery,
+                    onValueChange = {
+                        searchQuery = it
+                    },
+                    onClearSearchQuery = {
                         searchQuery = ""
-                        searchUiState.spellsResults = emptyList()
-                    }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = "Go back"
-                        )
-                    }
-                } else {
-                    Icon(imageVector = Icons.Rounded.Search, contentDescription = "Search")
-                }
-            },
-            trailingIcon = {
-                if (activeState) {
-                    IconButton(onClick = {
-                        if (searchQuery.isNotEmpty()) searchQuery = "" else activeState = false
-                    }) {
-                        Icon(
-                            imageVector = Icons.Rounded.Close,
-                            contentDescription = "Close search"
-                        )
-                    }
-                } else {
-                    null
-                }
-            },
-            colors = SearchBarDefaults.colors(
-                dividerColor = Color.LightGray,
-            ),
-        ) {
-            SearchScreen(
-                navigator = navigator,
-                searchUiState = searchUiState,
-                windowSize = windowSize,
-                onPropertyClick = { property ->
-                    viewModel.toggleSearchProperty(property)
-                }
-            )
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .background(MaterialTheme.colorScheme.surface)
-        ) {
-            if (homeUiState.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-            val lazyGridState = rememberLazyGridState()
-            LazyVerticalGrid(
-                modifier = Modifier.fillMaxSize(),
-                state = lazyGridState,
-                columns = GridCells.Fixed(columns),
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                items(homeUiState.allSpells!!) { spellDetail ->
-                    SpellShortView(
-                        intervalStart = 0F,
-                        spell = spellDetail,
-                        onItemClick = {
-                            navigator.navigate("/details/${spellDetail.slug}")
-                        },
-                        lazyGridState = lazyGridState
+                    },
+                    modifier = Modifier
+                        .height(55.dp)
+                        .weight(0.9f)
+                )
+                IconButton(
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    onClick = {
+                    //navigator.navigate(NavigationItem.FilterScreen.route)
+                }) {
+                    Icon(
+                        painter = painterResource(MainRes.image.filter_icon),
+                        modifier = Modifier
+                            .size(24.dp),
+                        tint = LocalCustomColorsPalette.current.secondaryIcon,
+                        contentDescription = "Фильтры"
                     )
                 }
             }
+        },
+        content = { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(LocalCustomColorsPalette.current.primaryBackground)
+                    .padding(innerPadding)
+                    .padding(paddingValues),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                if (homeUiState.isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                } else {
+                    val levels = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+                    LazyVerticalGrid(
+                        modifier = Modifier.fillMaxSize().padding(start = 16.dp, end = 16.dp, bottom = 4.dp),
+                        columns = GridCells.Fixed(columns),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        items(levels) { level ->
+                            LevelCard(
+                                level = level,
+                                onClick = {
+                                    navigator.navigate(NavigationItem.SpellsCategory.createRoute(level))
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    )
+}
+
+
+@Composable
+fun LevelCard(
+    level: Int,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .width(340.dp)
+            .height(70.dp)
+            //.padding(8.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .clickable { onClick() },
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = LocalCustomColorsPalette.current.containerSecondary,
+            contentColor = Color.Transparent
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Transparent)
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(
+                        color = LocalCustomColorsPalette.current.primaryIcon,
+                        shape = RoundedCornerShape(12.dp)
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                if (level == 0) {
+                    Icon(
+                        imageVector = Icons.Default.Book,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSecondary,
+                        modifier = Modifier.size(24.dp)
+                    )
+                } else {
+                    Text(
+                        text = level.toString(),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSecondary,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Text(
+                text = if (level != 0) "уровень" else "заговоры",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
         }
     }
 }

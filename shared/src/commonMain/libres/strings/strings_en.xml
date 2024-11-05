@@ -25,7 +25,7 @@
     <string name="sorcerer">Sorcerer</string>
     <string name="warlock">Warlock</string>
     <string name="wizard">Wizard</string>
-    <string name="artificer"> Изобретатель </string>
+    <string name="artificer"> Artificer </string>
     <string name="empty">Empty</string>
 
     <!-- BottomNavigation -->
@@ -43,7 +43,7 @@
 
     <!-- TextFieldBox -->
     <string name="cancel" >Cancel</string>
-    <string name="Search_spell">Search spell…</string>
+    <string name="Search_spell">Search spell</string>
 
     <!--  Filters Screen  -->
     <string name="level">Level</string>

@@ -43,7 +43,7 @@
 
     <!--TextFieldBox-->
     <string name="cancel">Отмена</string>
-    <string name="Search_spell">Поиск заклинания…</string>
+    <string name="Search_spell">Поиск заклинания</string>
 
     <!--  Filters Screen  -->
     <string name="level">Уровень</string>
