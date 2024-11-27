@@ -84,7 +84,6 @@
     <!--    Create Card -->
     <string name="add_card">Создать заклинание</string>
     <string name="create_card">Создание карточки</string>
-    <string name="cantrip">Заговор</string>
     <string name="spellName">Название</string>
     <string name="spellDesc">Описание</string>
     <string name="spellHightLevel">На больших уровнях</string>
@@ -105,4 +104,16 @@
     <string name="boostyLink">Мой Бусти</string>
     <string name="show_less">Скрыть</string>
     <string name="show_more">Раскрыть</string>
+
+
+    <string name="cantrip">Заговор</string>
+    <string name="level_1">1й уровень</string>
+    <string name="level_2">2й уровень</string>
+    <string name="level_3">3й уровень</string>
+    <string name="level_4">4й уровень</string>
+    <string name="level_5">5й уровень</string>
+    <string name="level_6">6й уровень</string>
+    <string name="level_7">7й уровень</string>
+    <string name="level_8">8й уровень</string>
+    <string name="level_9">9й уровень</string>
 </resources>

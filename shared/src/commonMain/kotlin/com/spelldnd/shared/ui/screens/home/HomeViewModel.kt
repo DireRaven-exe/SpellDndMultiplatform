@@ -1,5 +1,7 @@
 package com.spelldnd.shared.ui.screens.home
 
+import com.spelldnd.shared.domain.models.filter.SpellFilter
+import com.spelldnd.shared.domain.repositories.FiltersRepository
 import com.spelldnd.shared.domain.repositories.HomeRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -14,10 +16,15 @@ import org.koin.core.component.KoinComponent
 import com.spelldnd.shared.utils.HomeUiState
 import com.spelldnd.shared.utils.SearchUiState
 import com.spelldnd.shared.utils.isLoading
+import com.spelldnd.shared.utils.normalizeLevel
 import com.spelldnd.shared.utils.onFailure
 import com.spelldnd.shared.utils.onSuccess
+import kotlinx.coroutines.flow.StateFlow
 
-class HomeViewModel(private val homeRepository: HomeRepository) : KoinComponent {
+class HomeViewModel(
+    private val homeRepository: HomeRepository,
+    private val filterRepository: FiltersRepository
+) : KoinComponent {
     private val _homeUiState = MutableStateFlow(HomeUiState(isLoading = true))
     val homeUiState = _homeUiState.asStateFlow()
 
@@ -68,5 +75,32 @@ class HomeViewModel(private val homeRepository: HomeRepository) : KoinComponent 
 
     fun clearSelectedProperties() {
         searchUiState.value.selectedProperties = emptySet()
+    }
+
+    private val _selectedFilters = MutableStateFlow<Map<String, List<String>>>(emptyMap())
+    val selectedFilters = _selectedFilters.asStateFlow()
+
+    // Функция для применения фильтров
+    fun updateFilters(filters: Map<String, List<String>>) {
+        _selectedFilters.value = filters
+        updateSpellsListBasedOnFilters()
+    }
+
+    private fun updateSpellsListBasedOnFilters() {
+        _homeUiState.update { state ->
+            state.copy(
+                allSpells = state.allSpells?.filter { spell ->
+                    _selectedFilters.value.all { (filterKey, filterValues) ->
+                        when (filterKey) {
+                            "level" -> filterValues.any { normalizeLevel(spell.level!!) == it }
+                            "school" -> filterValues.any { spell.school?.contains(it, ignoreCase = true) == true }
+                            "dnd_class" -> filterValues.any { spell.dnd_class?.contains(it, ignoreCase = true) == true }
+                            "archetype" -> filterValues.any { spell.archetype?.contains(it, ignoreCase = true) == true }
+                            else -> true
+                        }
+                    }
+                }
+            )
+        }
     }
 }

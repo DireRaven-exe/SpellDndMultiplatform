@@ -32,12 +32,16 @@ val CustomDarkColors = CustomColorsPalette(
     primaryText = Color(0xFFF2F4F5),
 
     containerSecondary = Color(0xff232627),
-    secondaryText = Color(0xCC7A8A99),
+    secondaryText = Color(0xffabacb8),
 
+    selectedText = Color(0xff141718),
     tintColor = Color(0xFF485866),
 
-    primaryIcon = Color(0xfffd6246),
-    secondaryIcon = Color(0xff454545),
+
+    primaryIcon = Color(0xffc0c0c0),
+    secondaryIcon = Color(0xffabacb8),
+    selectedIcon = Color(0xfffd6246),
+    unselectedIcon = Color(0xff454545),
 
     primaryButtonTextColor = Color(0xFF5EB4F6),
     secondaryButtonTextColor = Color(0xFF7993AA),
@@ -63,12 +67,15 @@ val CustomLightColors = CustomColorsPalette(
     primaryText = Color(0xff050505),
 
     containerSecondary = Color(0xfffafbfb),
-    secondaryText = Color(0xff090909),
+    secondaryText = Color(0xffabacb8),
 
+    selectedText = Color(0xfffafbfb),
     tintColor = Color(0xFF485866),
 
-    primaryIcon = Color(0xfffd6246),
-    secondaryIcon = Color(0xffabacb8),
+    primaryIcon = Color(0xff333333),
+    secondaryIcon = Color(0xffc0c0c0),
+    selectedIcon = Color(0xfffd6246),
+    unselectedIcon = Color(0xffabacb8),
 
     primaryButtonTextColor = Color(0xFF5EB4F6),
     secondaryButtonTextColor = Color(0xFF7993AA),
@@ -87,6 +94,32 @@ val CustomLightColors = CustomColorsPalette(
 
     notificationBackground = Color(0x9e333333),
     notificationContent = Color(0xffeefdf7)
+)
+
+data class TypoDndPalette(
+    val darkBackground: Color = Color.Unspecified,
+    val darkCard: Color = Color.Unspecified,
+    val darkButton: Color = Color.Unspecified,
+    val lightSeaGreen: Color = Color.Unspecified,
+    val greyText: Color = Color.Unspecified,
+    val davysGray: Color = Color.Unspecified,
+    val lightGrayishBlue: Color = Color.Unspecified,
+    val paleSilver: Color = Color.Unspecified,
+    val green: Color = Color.Unspecified,
+    val mainRed: Color = Color.Unspecified
+)
+
+val typoDndPalette = TypoDndPalette(
+    darkBackground = Color(0xff141718),
+    darkCard = Color(0xff232627),
+    darkButton = Color(0xff454545),
+    lightSeaGreen = Color(0xff333333),
+    greyText = Color(0xffabacb8),
+    davysGray = Color(0xffc0c0c0),
+    lightGrayishBlue = Color(0xfff5f6f8),
+    paleSilver = Color(0xfffafbfb),
+    green = Color(0xff54c575),
+    mainRed = Color(0xfffd6246)
 )
 
 
@@ -109,10 +142,13 @@ data class CustomColorsPalette (
     val containerSecondary: Color = Color.Unspecified,
     val secondaryText: Color = Color.Unspecified,
 
+    val selectedText: Color = Color.Unspecified,
     val tintColor: Color = Color.Unspecified,
 
     val primaryIcon: Color = Color.Unspecified,
     val secondaryIcon: Color = Color.Unspecified,
+    val selectedIcon: Color = Color.Unspecified,
+    val unselectedIcon: Color = Color.Unspecified,
 
     val primaryButtonTextColor: Color = Color.Unspecified,
     val secondaryButtonTextColor: Color = Color.Unspecified,
@@ -136,6 +172,8 @@ data class CustomColorsPalette (
 val LocalCustomColorsPalette = staticCompositionLocalOf { CustomColorsPalette() }
 
 val LocalSpellCardPalette = staticCompositionLocalOf { SpellCardPallete() }
+
+val LocalTypoDndPalette = staticCompositionLocalOf { TypoDndPalette() }
 
 @Composable
 fun SpellDndMultiPlatformTheme(
@@ -165,7 +203,8 @@ fun SpellDndMultiPlatformTheme(
 
     CompositionLocalProvider(
         LocalCustomColorsPalette provides customColorsPalette,
-        LocalSpellCardPalette provides spellCardPallete
+        LocalSpellCardPalette provides spellCardPallete,
+        LocalTypoDndPalette provides typoDndPalette
     ) {
         MaterialTheme(
             colorScheme = colors,

@@ -82,8 +82,6 @@
     <string name="add_card">Add card</string>
     <string name="create_card">Create card</string>
 
-
-    <string name="cantrip">Cantrip</string>
     <string name="spellName">Name</string>
     <string name="spellDesc">Description</string>
     <string name="spellHightLevel">Higher Level</string>
@@ -104,4 +102,15 @@
     <string name="boostyLink">My boosty</string>
     <string name="show_less">Show less</string>
     <string name="show_more">Show more</string>
+
+    <string name="cantrip">Cantrip</string>
+    <string name="level_1">1th-level</string>
+    <string name="level_2">2th-level</string>
+    <string name="level_3">3th-level</string>
+    <string name="level_4">4th-level</string>
+    <string name="level_5">5th-level</string>
+    <string name="level_6">6th-level</string>
+    <string name="level_7">7th-level</string>
+    <string name="level_8">8th-level</string>
+    <string name="level_9">9th-level</string>
 </resources>

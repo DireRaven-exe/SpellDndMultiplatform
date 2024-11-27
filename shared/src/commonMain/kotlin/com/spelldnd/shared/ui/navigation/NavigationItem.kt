@@ -23,4 +23,6 @@ sealed class NavigationItem(
     object SpellsCategory : NavigationItem("/spells/category/{level}", "Levels", null) {
         fun createRoute(level: Int) = "/spells/category/$level"
     }
+
+    object FilterScreen : NavigationItem("/filters", MainRes.string.filters, null)
 }

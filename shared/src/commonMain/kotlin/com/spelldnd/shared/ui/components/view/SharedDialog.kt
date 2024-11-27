@@ -77,7 +77,7 @@ fun SharedDialog(showDialog: MutableState<Boolean>) {
                         modifier = Modifier
                             .size(22.dp)
                             .padding(end = 4.dp),
-                        tint = LocalCustomColorsPalette.current.primaryIcon
+                        tint = LocalCustomColorsPalette.current.selectedIcon
                     )
                     Text(
                         text = MainRes.string.sharedTittle,

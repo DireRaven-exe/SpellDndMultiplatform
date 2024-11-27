@@ -43,7 +43,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.spelldnd.shared.domain.models.SpellDetail
-import com.spelldnd.shared.ui.components.bar.CollapsingToolbarScaffoldScopeInstance.align
 import com.spelldnd.shared.ui.components.view.SharedDialog
 import com.spelldnd.shared.ui.theme.LocalCustomColorsPalette
 import com.spelldnd.shared.utils.DetailsUiState
@@ -104,7 +103,7 @@ fun DetailsAppBar(
                 Icon(
                     imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                     contentDescription = "Back",
-                    tint = LocalCustomColorsPalette.current.primaryIcon
+                    tint = LocalCustomColorsPalette.current.selectedIcon
                 )
             }
         },
@@ -126,7 +125,7 @@ fun DetailsAppBar(
                 Icon(
                     imageVector = Icons.Filled.Favorite,
                     contentDescription = "Favourite",
-                    tint = if (isFavorite == true) LocalCustomColorsPalette.current.primaryIcon else LocalCustomColorsPalette.current.secondaryIcon
+                    tint = if (isFavorite == true) LocalCustomColorsPalette.current.selectedIcon else LocalCustomColorsPalette.current.unselectedIcon
                 )
                 FavoriteNotificationCard(
                     message = notificationMessage,
@@ -151,7 +150,7 @@ fun DetailsAppBar(
                     Icon(
                         imageVector = Icons.Rounded.DeleteForever,
                         contentDescription = "Delete",
-                        tint = LocalCustomColorsPalette.current.secondaryIcon
+                        tint = LocalCustomColorsPalette.current.unselectedIcon
                     )
                 }
             }

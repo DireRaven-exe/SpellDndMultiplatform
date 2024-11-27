@@ -79,7 +79,7 @@ fun descriptionView(spell: SpellDetail) {
                 onClick = { isExpanded = !isExpanded }
             ) {
                 Text(text = if (isExpanded) MainRes.string.show_less else MainRes.string.show_more,
-                    color = LocalCustomColorsPalette.current.primaryIcon
+                    color = LocalCustomColorsPalette.current.selectedIcon
                     )
             }
         }

@@ -2,6 +2,7 @@ package com.spelldnd.shared.utils
 
 import com.russhwolf.settings.ExperimentalSettingsApi
 import com.spelldnd.shared.data.cashe.datasources.FavoritesRepositoryImpl
+import com.spelldnd.shared.data.cashe.datasources.FiltersRepositoryImpl
 import com.spelldnd.shared.data.cashe.datasources.HomebrewRepositoryImpl
 import com.spelldnd.shared.data.cashe.datasources.SettingsRepositoryImpl
 import com.spelldnd.shared.data.cashe.datasources.SpellDetailRepositoryImpl
@@ -9,6 +10,7 @@ import com.spelldnd.shared.data.cashe.datasources.HomeRepositoryImpl
 import com.spelldnd.shared.data.cashe.sqldelight.daos.FavoriteDao
 import com.spelldnd.shared.data.cashe.sqldelight.daos.HomebrewDao
 import com.spelldnd.shared.domain.repositories.FavoritesRepository
+import com.spelldnd.shared.domain.repositories.FiltersRepository
 import com.spelldnd.shared.domain.repositories.HomebrewRepository
 import com.spelldnd.shared.domain.repositories.SettingsRepository
 import com.spelldnd.shared.domain.repositories.SpellDetailRepository
@@ -35,6 +37,7 @@ import com.spelldnd.shared.ui.screens.home.HomeViewModel
 import com.spelldnd.shared.ui.screens.settings.SettingsViewModel
 import com.spelldnd.shared.ui.screens.favorites.FavoritesViewModel
 import com.spelldnd.shared.ui.screens.homebrew.HomebrewViewModel
+import com.spelldnd.shared.ui.screens.filters.FiltersViewModel
 import org.koin.core.module.dsl.singleOf
 
 @OptIn(ExperimentalSettingsApi::class)
@@ -94,8 +97,11 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
         SpellDetailRepositoryImpl(httpClient = get(), favoriteDao = get(), homebrewDao = get())
     }
 
+    single<FiltersRepository> { FiltersRepositoryImpl() }
+
     singleOf(::MainViewModel)
     singleOf(::HomeViewModel)
+    singleOf(::FiltersViewModel)
     singleOf(::DetailsViewModel)
     singleOf(::SettingsViewModel)
     singleOf(::FavoritesViewModel)

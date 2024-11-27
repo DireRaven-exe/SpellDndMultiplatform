@@ -100,7 +100,7 @@ fun SchoolAnimatedIconView(spell: SpellDetail, state: LazyGridState) {
             contentDescription = null,
             modifier = Modifier
                 .size(32.dp),
-            tint = LocalCustomColorsPalette.current.secondaryIcon
+            tint = LocalCustomColorsPalette.current.unselectedIcon
         )
     }
 }

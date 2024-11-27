@@ -118,7 +118,7 @@ fun CardParameterView(keyParameter: String, valueParameter: String?) {
                             modifier = Modifier
                                 .size(22.dp)
                                 .padding(end = 4.dp),
-                            tint = LocalCustomColorsPalette.current.primaryIcon
+                            tint = LocalCustomColorsPalette.current.selectedIcon
                         )
                         Text(
                             text = keyParameter,
@@ -165,7 +165,7 @@ fun BoldTextInfoView(
                 modifier = Modifier
                     .size(22.dp)
                     .padding(end = 4.dp),
-                tint = LocalCustomColorsPalette.current.primaryIcon
+                tint = LocalCustomColorsPalette.current.selectedIcon
             )
             Text(
                 text = keyParameter,

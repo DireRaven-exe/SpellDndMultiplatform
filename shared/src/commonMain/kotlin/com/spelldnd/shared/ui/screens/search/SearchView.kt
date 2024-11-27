@@ -38,7 +38,7 @@ fun CustomSearchView(
 
     Box(
         modifier = modifier
-            .fillMaxWidth() // Максимальная ширина, чтобы поле не изменяло размер
+            .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(LocalCustomColorsPalette.current.containerSecondary)
 
@@ -48,13 +48,14 @@ fun CustomSearchView(
             onValueChange = onValueChange,
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = LocalCustomColorsPalette.current.containerSecondary,
-                focusedLeadingIconColor = Color(0XFF888D91),
-                unfocusedLeadingIconColor = Color(0XFF888D91),
-                focusedTrailingIconColor = Color(0XFF888D91),
-                unfocusedTrailingIconColor = Color(0XFF888D91),
+                focusedLeadingIconColor = LocalCustomColorsPalette.current.secondaryIcon,
+                unfocusedLeadingIconColor = LocalCustomColorsPalette.current.secondaryIcon,
+                focusedTrailingIconColor = LocalCustomColorsPalette.current.secondaryIcon,
+                unfocusedTrailingIconColor = LocalCustomColorsPalette.current.secondaryIcon,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                cursorColor = Color(0XFF888D91)
+                cursorColor = Color(0XFF888D91),
+                unfocusedTextColor = LocalCustomColorsPalette.current.secondaryText
             ),
             leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = null) },
             trailingIcon = {
@@ -71,7 +72,12 @@ fun CustomSearchView(
                     }
                 }
             },
-            placeholder = { Text(text = MainRes.string.Search_spell) },
+            placeholder = {
+                Text(
+                    text = MainRes.string.Search_spell,
+                    color = LocalCustomColorsPalette.current.secondaryText
+                )
+            },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )

@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED_EXPRESSION")
-
 package com.spelldnd.shared.ui.screens.home
 
 import androidx.compose.foundation.background
@@ -19,20 +17,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
-import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -47,15 +43,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.spelldnd.common.MainRes
+import com.spelldnd.shared.ui.components.view.SpellShortView
 import com.spelldnd.shared.ui.navigation.NavigationItem
 import com.spelldnd.shared.ui.screens.search.CustomSearchView
 import com.spelldnd.shared.ui.theme.LocalCustomColorsPalette
 import com.spelldnd.shared.utils.WindowSize
+import com.spelldnd.shared.utils.normalizeLevel
 import io.github.skeptick.libres.compose.painterResource
 import moe.tlaster.precompose.navigation.Navigator
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navigator: Navigator,
@@ -71,79 +68,138 @@ fun HomeScreen(
 
     var searchQuery by remember { mutableStateOf("") }
 
+    // Уровни для LevelCard
+    val levels = remember { listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9) }
+
     LaunchedEffect(key1 = viewModel) {
         viewModel.fetchAllSpells()
     }
 
+    // Состояние UI из ViewModel
     val homeUiState = viewModel.homeUiState.collectAsState().value
+    val gridState = rememberLazyGridState()
+
+    // Фильтруем заклинания по запросу
+    val filteredSpells = remember(searchQuery, homeUiState.allSpells) {
+        if (searchQuery.isBlank()) homeUiState.allSpells else {
+            homeUiState.allSpells?.filter { spell ->
+                spell.name!!.contains(searchQuery, ignoreCase = true)
+            }
+        }
+    }
+
+    // Состояние фильтров из ViewModel
+    val filtersState by viewModel.selectedFilters.collectAsState()
+
+    // Фильтруем заклинания по фильтрам
+    val finalFilteredSpells = remember(filteredSpells, filtersState) {
+        filteredSpells?.filter { spell ->
+            filtersState.all { (key, values) ->
+                when (key) {
+                    "level" -> values.contains(normalizeLevel(spell.level!!))
+                    "school" -> values.any { spell.school?.contains(it, ignoreCase = true) == true }
+                    // добавьте другие фильтры по необходимости
+                    else -> true
+                }
+            }
+        }
+    }
 
     Scaffold(
         containerColor = LocalCustomColorsPalette.current.primaryBackground,
         topBar = {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 24.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp)
+            ) {
                 CustomSearchView(
                     search = searchQuery,
-                    onValueChange = {
-                        searchQuery = it
-                    },
-                    onClearSearchQuery = {
-                        searchQuery = ""
-                    },
+                    onValueChange = { searchQuery = it },
+                    onClearSearchQuery = { searchQuery = "" },
                     modifier = Modifier
                         .height(55.dp)
                         .weight(0.9f)
+                        .padding(end = 16.dp)
                 )
                 IconButton(
                     modifier = Modifier.align(Alignment.CenterVertically),
-                    onClick = {
-                    //navigator.navigate(NavigationItem.FilterScreen.route)
-                }) {
+                    onClick = { navigator.navigate(NavigationItem.FilterScreen.route) }
+                ) {
                     Icon(
                         painter = painterResource(MainRes.image.filter_icon),
-                        modifier = Modifier
-                            .size(24.dp),
-                        tint = LocalCustomColorsPalette.current.secondaryIcon,
+                        modifier = Modifier.size(24.dp),
+                        tint = LocalCustomColorsPalette.current.primaryIcon,
                         contentDescription = "Фильтры"
                     )
                 }
             }
         },
         content = { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(LocalCustomColorsPalette.current.primaryBackground)
-                    .padding(innerPadding)
-                    .padding(paddingValues),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                if (homeUiState.isLoading) {
+            if (homeUiState.isLoading) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(LocalCustomColorsPalette.current.primaryBackground)
+                        .padding(innerPadding),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-                } else {
-                    val levels = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(paddingValues)
+                ) {
                     LazyVerticalGrid(
-                        modifier = Modifier.fillMaxSize().padding(start = 16.dp, end = 16.dp, bottom = 4.dp),
+                        state = gridState,
                         columns = GridCells.Fixed(columns),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        contentPadding = PaddingValues(
+                            top = 20.dp,
+                            bottom = 20.dp,
+                            start = 16.dp,
+                            end = 16.dp
+                        )
                     ) {
-                        items(levels) { level ->
-                            LevelCard(
-                                level = level,
-                                onClick = {
-                                    navigator.navigate(NavigationItem.SpellsCategory.createRoute(level))
-                                }
-                            )
-                        }
+//                        if (searchQuery.isBlank()) {
+//                            // Отображаем уровни, если нет поискового запроса
+//                            items(levels) { level ->
+//                                LevelCard(
+//                                    level = level,
+//                                    onClick = {
+//                                        navigator.navigate(
+//                                            NavigationItem.SpellsCategory.createRoute(level)
+//                                        )
+//                                    }
+//                                )
+//                            }
+                        //} else {
+                            // Отображаем результаты поиска с применением фильтров
+                            items(finalFilteredSpells!!) { spellDetail ->
+                                SpellShortView(
+                                    intervalStart = 0F,
+                                    spell = spellDetail,
+                                    onItemClick = {
+                                        navigator.navigate("/details/${spellDetail.slug}")
+                                    },
+                                    lazyGridState = gridState
+                                )
+                            }
+                        //}
                     }
                 }
             }
         }
     )
 }
+
+
+
 
 
 @Composable
@@ -155,7 +211,6 @@ fun LevelCard(
         modifier = Modifier
             .width(340.dp)
             .height(70.dp)
-            //.padding(8.dp)
             .clip(RoundedCornerShape(16.dp))
             .clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
@@ -175,7 +230,7 @@ fun LevelCard(
                 modifier = Modifier
                     .size(40.dp)
                     .background(
-                        color = LocalCustomColorsPalette.current.primaryIcon,
+                        color = LocalCustomColorsPalette.current.selectedIcon,
                         shape = RoundedCornerShape(12.dp)
                     ),
                 contentAlignment = Alignment.Center
