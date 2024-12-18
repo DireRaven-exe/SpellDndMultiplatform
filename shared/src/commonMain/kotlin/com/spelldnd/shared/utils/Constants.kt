@@ -10,5 +10,5 @@ object Constants {
     const val KEY_THEME = "ui/theme"
     const val KEY_LANGUAGE = "language"
     const val KEY_IMAGE_QUALITY = "image_quality"
-    const val BASE_URL = "34.125.193.15:8080" //"127.0.0.1:8080"//
+    const val BASE_URL = "46.30.46.160:8080" //"127.0.0.1:8080"//
 }
